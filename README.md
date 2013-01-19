@@ -15,7 +15,7 @@ ENGINE=MyISAM;
 ````
 
 ##Use
-To use it, you can simply go over to demo.html (and error.php, .htaccess, and style.css) and replace all ***REPLACE ME***'s with valid code.
+To use it, you can simply download Shrink-a-Link as a .zip and replace all the ***REPLACE ME***'s with valid code.
 
 If you wanna go into the details, stay here.
 
