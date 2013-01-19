@@ -226,3 +226,8 @@ For sake of space, I'm not putting the theme css on this readme, just go copy th
 >Non-space consuming - Only requires 4 files
 
 >Tiny - Coded in less than 300 lines of code
+
+## License
+Author: Zbee <http://zbee.me> <zbee@zbee.me>
+
+Licensed under AOL <http://zbee.me/aol>
