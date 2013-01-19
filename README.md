@@ -145,7 +145,7 @@ links (your link shrinker) where the shrinker will attempt to delete the bad lin
 <!DOCTYPE html>
 <html>
   <head>
-		<title>ZShrink Redirecting</title>
+		<title>Shrink-a-Link Redirecting</title>
 	</head>
 	<body>
 	
