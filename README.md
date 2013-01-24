@@ -219,6 +219,8 @@ For sake of space, I'm not putting the theme css on this readme, just go copy th
 ##Features
 >URL Comparison - If there's already a shrunken link with the URL the user just inputed, it simply returns the shrunken URL.
 
+>Shrink Comparison - If there's already a shrunken link with the shrink the system just generated, it regenerates the shrink.
+
 >URL Variety - ~8 million possible shrunken URLs with the default 5 character shrink code
 
 >Simplicity - Takes the user's URL, stores it, generates a code, and returns it as a link; simple as that
