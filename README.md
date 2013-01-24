@@ -111,13 +111,23 @@ Please replace the value of $root_url with your website (if you own cows.com mak
 					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
 				}
 			}
+			
+			$s_match_query = mysql_query("SELECT * FROM links WHERE shrink='".$shrink."'");
+			$s_numrows = mysql_num_rows($s_match_query);
+			if ($s_numrows == 1) {
+				while ($value = mysql_fetch_array($s_match_query)) {
+					$good = false;
+					$shrink = genshrink();
+					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
+				}
+			}
 
 			if ($good == true) {
 				$query = mysql_query("INSERT INTO links (link, shrink) VALUES ('$url','$shrink')");
 				if (!$query) {
 					$error .= '<div class="ribbon">MySQL Error: ' . mysql_error() . '</div><br>';
 				} else {
-					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$shrunk.'">'.$root_url.''.$shrunk.'</a></div><br>';
+					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$shrink.'">'.$root_url.''.$shrink.'</a></div><br>';
 				}
 			}
 		}
