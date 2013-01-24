@@ -81,16 +81,25 @@
             }
 
 //If given url matches a url already in the table, simply return that url's shrink code
-            $match_query = mysql_query("SELECT * FROM links WHERE link='".$_POST['url']."'");
-            $numrows = mysql_num_rows($match_query);
-            if ($numrows == 1) {
-                while ($value = mysql_fetch_array($match_query)) {
-                    $good = false;
-                    $error .= ''.$numrows.'';
-                    $shrink = $value['shrink'];
-                    $error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
-                }
-            }
+		$match_query = mysql_query("SELECT * FROM zshrunk_links WHERE original='".$_POST['url']."'");
+		$numrows = mysql_num_rows($match_query);
+		if ($numrows == 1) {
+			while ($value = mysql_fetch_array($match_query)) {
+				$good = false;
+				$shrunk = $value['shrunk'];
+				$error .= '<div class="ribbon">Link shrunk successfully! <a href="http://s.zbee.me/'.$value['shrunk'].'">http://s.zbee.me/'.$value['shrunk'].'</a></div><br>';
+			}
+		}
+		
+		$s_match_query = mysql_query("SELECT * FROM zshrunk_links WHERE shrunk='".$shrunk."'");
+		$s_numrows = mysql_num_rows($s_match_query);
+		if ($s_numrows == 1) {
+			while ($value = mysql_fetch_array($s_match_query)) {
+				$good = false;
+				$shrunk = genshrink();
+				$error .= '<div class="ribbon">Link shrunk successfully! <a href="http://s.zbee.me/'.$shrunk.'">http://s.zbee.me/'.$shrunk.'</a></div><br>';
+			}
+		}
 
             if ($good == true) {
                 $query = mysql_query("INSERT INTO links (link, shrink) VALUES ('$url','$shrink')");
