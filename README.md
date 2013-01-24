@@ -225,7 +225,7 @@ For sake of space, I'm not putting the theme css on this readme, just go copy th
 
 >Simplicity - Takes the user's URL, stores it, generates a code, and returns it as a link; simple as that
 
->Input Sanitization - Sanitizes user inputs by removing nast SQL code such as DELETE and DROP, keeping your table(s) safe
+>Input Sanitization - Sanitizes user inputs by removing nasty SQL code such as DELETE and DROP, keeping your table(s) safe
 
 >Error Detection - Checks to make sure that the user input something so you don't wind up with a table half empty
 
