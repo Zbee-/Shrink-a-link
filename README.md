@@ -76,13 +76,13 @@ Please replace the value of $root_url with your website (if you own cows.com mak
 		}
 		
 		function genshrink() {
-			$chars = "abcdefghijklmnopqrstuvwxyz-_0123456789";	
+			$chars = "9q0brp6ms45nfo3c8khljg2iva-tz1_deyx7wu";
 			$length = 5;
 			$size = strlen( $chars );
 			for( $i = 0; $i < $length; $i++ ) {
 				$str .= $chars[ rand( 0, $size - 1 ) ];
 			}
-		
+
 			return $str;
 		}
 		
