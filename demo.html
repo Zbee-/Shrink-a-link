@@ -54,17 +54,17 @@
             }
             return $sql;
         }
+        
+	function genshrink() {
+		$chars = "9q0brp6ms45nfo3c8khljg2iva-tz1_deyx7wu";
+		$length = 5;
+		$size = strlen( $chars );
+		for( $i = 0; $i < $length; $i++ ) {
+			$str .= $chars[ rand( 0, $size - 1 ) ];
+		}
 
-        function genshrink() {
-            $chars = "abcdefghijklmnopqrstuvwxyz-_0123456789";  
-            $length = 5;
-            $size = strlen( $chars );
-            for( $i = 0; $i < $length; $i++ ) {
-                $str .= $chars[ rand( 0, $size - 1 ) ];
-            }
-
-            return $str;
-        }
+		return $str;
+	}
 
 //Shrink
         if (isset($_POST['url'])) {
