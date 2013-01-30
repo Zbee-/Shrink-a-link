@@ -88,6 +88,15 @@ Please replace the value of $root_url with your website (if you own cows.com mak
 				$good = false;
 			}
 
+//Real URL checking
+			if (strstr($url, "http://") == $url) {
+				$url = $url;
+			} elseif (strstr($url, "https://") == $url) {
+				$url = $url;
+			} else {
+				$url = "http://www.".$url."";
+			}
+		
 //If given url matches a url already in the table, simply return that url's shrink code
 			$match_query = mysql_query("SELECT * FROM links WHERE link='".$_POST['url']."'");
 			$numrows = mysql_num_rows($match_query);
