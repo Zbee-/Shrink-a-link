@@ -66,8 +66,13 @@ Please replace the value of $root_url with your website (if you own cows.com mak
 
 //Functions
 		function sanitize($sql, $formUse = true) {
-			$sanitized = mysql_real_escape_string(addslashes($sql));
-			return $sanitized;
+			$sql = preg_replace("/(from|script|src|select|insert|delete|where|drop table|show tables|,|'|#|\*|--|\\\\)/i","",$sql);
+			$sql = trim($sql);
+			$sql = strip_tags($sql);
+			if(!$formUse || !get_magic_quotes_gpc()) {
+				$sql = addslashes($sql);
+			}
+			return $sql;
 		}
 		
 		function genshrink($length = 5) {
