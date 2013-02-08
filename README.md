@@ -105,7 +105,7 @@ Please replace the value of $root_url with your website (if you own cows.com mak
 					$good = false;
 					$error .= ''.$numrows.'';
 					$shrink = $value['shrink'];
-					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
+					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
 				}
 			}
 			
@@ -115,7 +115,7 @@ Please replace the value of $root_url with your website (if you own cows.com mak
 				while ($value = mysql_fetch_array($s_match_query)) {
 					$good = false;
 					$shrink = genshrink();
-					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
+					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
 				}
 			}
 
@@ -124,7 +124,7 @@ Please replace the value of $root_url with your website (if you own cows.com mak
 				if (!$query) {
 					$error .= '<div class="ribbon">MySQL Error: ' . mysql_error() . '</div><br>';
 				} else {
-					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$shrink.'">'.$root_url.''.$shrink.'</a></div><br>';
+					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$shrink.'">'.$root_url.''.$shrink.'</a></div><br>';
 				}
 			}
 		}
