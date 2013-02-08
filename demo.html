@@ -46,8 +46,13 @@
 
 //Functions
 	function sanitize($sql, $formUse = true) {
-		$sanitized = mysql_real_escape_string(addslashes($sql));
-		return $sanitized;
+		$sql = preg_replace("/(from|script|src|select|insert|delete|where|drop table|show tables|,|'|#|\*|--|\\\\)/i","",$sql);
+		$sql = trim($sql);
+		$sql = strip_tags($sql);
+		if(!$formUse || !get_magic_quotes_gpc()) {
+			$sql = addslashes($sql);
+		}
+		return $sql;
 	}
 	
 	function genshrink($length = 5) {
@@ -85,7 +90,7 @@
                     $good = false;
                     $error .= ''.$numrows.'';
                     $shrink = $value['shrink'];
-                    $error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
+                    $error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
                 }
             }
 
@@ -95,7 +100,7 @@
                 while ($value = mysql_fetch_array($s_match_query)) {
                     $good = false;
                     $shrink = genshrink();
-                    $error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
+                    $error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
                 }
             }
 
@@ -104,7 +109,7 @@
                 if (!$query) {
                     $error .= '<div class="ribbon">MySQL Error: ' . mysql_error() . '</div><br>';
                 } else {
-                    $error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.''.$shrink.'">'.$root_url.''.$shrink.'</a></div><br>';
+                    $error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$shrink.'">'.$root_url.''.$shrink.'</a></div><br>';
                 }
             }
         }
@@ -113,7 +118,7 @@
 		<div id="header"><a href="http://zbee.me">Zbee's</a> Shrink-a-Link</div>
 		
 		<div id="ribbon-container">
-				<div class="ribbon git"><a href="http://s.zbee.me/z_WRW">On Github!</a></div>
+				<div class="ribbon git"><a href="http://zbee.me/z_WRW">On Github!</a></div>
 				<?php echo $error; ?>
 		</div>
 
