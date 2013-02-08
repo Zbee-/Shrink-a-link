@@ -199,7 +199,7 @@ if ($num_rows == 1) {
 } else {
     echo '<script type="text/javascript">
 	<!--
-	window.location="'.$root_url.?exist=no&attempt='.$page.'";
+	window.location="'.$root_url.'?exist=no&attempt='.$page.'";
 	// -->
 	</script>';
 }
