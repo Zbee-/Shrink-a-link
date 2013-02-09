@@ -19,6 +19,25 @@ To use it, you can simply download Shrink-a-Link as a .zip and replace all the *
 
 If you wanna go into the details, stay here.
 
+###PHP (Configuration)
+Edit the values in this file to reflect your website's settings.
+
+``` bash
+<?php
+  	$db_connect   =    mysql_connect("localhost", "**DATABASE USERNAME**", "**DATABASE PASSWORD**") or die(mysql_error());
+      //Database Connection
+      //Default: "mysql_connect("localhost", "**DATABASE USERNAME**", "**DATABASE PASSWORD**") or die(mysql_error())"
+
+    $db_select    =    mysql_select_db("**DATABASE NAME**");
+      //Database Selection
+      //Default: "mysql_select_db("**DATABASE NAME**")"
+
+    $root_url = "http://**YOUR SITE**.com";
+      //The root url of your installment of S-a-L (No trailing slash)
+      //Default: "http://**YOUR SITE**.com"
+?>
+````
+
 
 ###PHP (Generation and Error checking)
 
