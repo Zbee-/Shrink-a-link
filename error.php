@@ -6,12 +6,7 @@
     <body>
 
     <?php
-
-    $root_url = "http://**YOUR SITE**.com"; //No trailing slash. Bad: http://example.com/. Good: http://example.com.
-
-//MySQL connect
-    mysql_connect("localhost", "**DATABASE USERNAME**", "**DATABASE PASSWORD**") or die(mysql_error());
-    mysql_select_db("**DATABASE NAME**");
+    require "config.php";
 
 function endsWith($haystack, $needle) {
     $length = strlen($needle);
