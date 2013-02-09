@@ -24,19 +24,12 @@ If you wanna go into the details, stay here.
 
 This code is made with the assumption that the table you just made was named links, with the columns of "link" and "shrink".
 
-Please replace the value of $root_url with your website (if you own cows.com make $root_url = "http://cows.com";)
-
 ``` bash
 <?php
-    $root_url = "http://**YOUR SITE**.com"; //No trailing slash. Bad: http://example.com/. Good: http://example.com.
-    
+   	require "config.php";
   	$error = "";
 		$good = true;
 		$sgood = true;
-
-//MySQL connect
-	mysql_connect("localhost", "**DATABASE USERNAME**", "**DATABASE PASSWORD**") or die(mysql_error());
-	mysql_select_db("**DATABASE NAME**");
 
 //Non-existant links
 		if (isset($_GET['exist'])) {
@@ -157,17 +150,12 @@ links (your link shrinker) where the shrinker will attempt to delete the bad lin
 <!DOCTYPE html>
 <html>
   <head>
-		<title>Shrink-a-Link Redirecting</title>
-	</head>
-	<body>
-	
-	<?php
-  
-    $root_url = "http://**YOUR SITE**.com"; //No trailing slash. Bad: http://example.com/. Good: http://example.com.
+        <title>Shrink-a-Link Redirecting</title>
+    </head>
+    <body>
 
-//MySQL connect
-	mysql_connect("localhost", "**DATABASE USERNAME**", "**DATABASE PASSWORD**") or die(mysql_error());
-	mysql_select_db("**DATABASE NAME**");
+    <?php
+    require "config.php";
 
 function endsWith($haystack, $needle) {
     $length = strlen($needle);
@@ -184,33 +172,33 @@ if (endsWith($page, "/")) {
 
 if ($page == "" || empty($page)) {
     echo '<script type="text/javascript">
-	<!--
-	window.location="'.$root_url.'?exist=no";
-	// -->
-	</script>';
+    <!--
+    window.location="'.$root_url.'?exist=no";
+    // -->
+    </script>';
 }
 
 $query = mysql_query("SELECT original FROM links WHERE shrink='".$page."'");
 $num_rows = mysql_num_rows($query);
 
 if ($num_rows == 1) {
-	while ($value = mysql_fetch_array($query)) {
-		echo '<script type="text/javascript">
-		<!--
-		window.location="'.$value['link'].'";
-		// -->
-		</script>';
-	}
+    while ($value = mysql_fetch_array($query)) {
+        echo '<script type="text/javascript">
+        <!--
+        window.location="'.$value['link'].'";
+        // -->
+        </script>';
+    }
 } else {
     echo '<script type="text/javascript">
-	<!--
-	window.location="'.$root_url.'?exist=no&attempt='.$page.'";
-	// -->
-	</script>';
+    <!--
+    window.location="'.$root_url.'?exist=no&attempt='.$page.'";
+    // -->
+    </script>';
 }
 ?>
-		Redirecting . . .
-	</body>
+        Redirecting . . .
+    </body>
 </html>
 ````
 
