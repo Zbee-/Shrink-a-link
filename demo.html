@@ -8,7 +8,7 @@
 	<body>
 	
 <?php
-    require "config.php";
+   	require "config.php";
         $error = "";
         $good = true;
         $sgood = true;
@@ -41,7 +41,7 @@
 
 //Functions
 	function sanitize($sql, $formUse = true) {
-		$sql = preg_replace("/(from|script|src|select|insert|delete|where|drop table|show tables|,|'|#|\*|--|\\\\)/i","",$sql);
+		$sql = preg_replace("/(from|script|src|select|insert|delete|where|drop table|show tables|,|'|\*|--|\\\\)/i","",$sql);
 		$sql = trim($sql);
 		$sql = strip_tags($sql);
 		if(!$formUse || !get_magic_quotes_gpc()) {
