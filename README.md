@@ -24,11 +24,11 @@ Edit the values in this file to reflect your website's settings.
 
 ``` bash
 <?php
-  	$db_connect   =    mysql_connect("localhost", "**DATABASE USERNAME**", "**DATABASE PASSWORD**") or die(mysql_error());
+    $db_connect = mysql_connect("localhost", "**DATABASE USERNAME**", "**DATABASE PASSWORD**") or die(mysql_error());
       //Database Connection
       //Default: "mysql_connect("localhost", "**DATABASE USERNAME**", "**DATABASE PASSWORD**") or die(mysql_error())"
 
-    $db_select    =    mysql_select_db("**DATABASE NAME**");
+    $db_select  = mysql_select_db("**DATABASE NAME**");
       //Database Selection
       //Default: "mysql_select_db("**DATABASE NAME**")"
 
@@ -36,9 +36,13 @@ Edit the values in this file to reflect your website's settings.
       //The root url of your installment of S-a-L (No trailing slash)
       //Default: "http://**YOUR SITE**.com"
       
-    $char_string  =   "abcdefghijklmnopqrstuvwxyz0123456789";
+    $char_string = "abcdefghijklmnopqrstuvwxyz0123456789";
       //The selection of characters that a shrink comes from (note: S-a-L does not currently recognize capitilization)
       //Default: "abcdefghijklmnopqrstuvwxyz0123456789"
+      
+    $length = 5;
+      //The length of the generated shrink (5 produces ~60 million codes {36^5 = 36 * 36 * 36 * 36})
+      //Default: "5"
 ?>
 ````
 
@@ -53,6 +57,7 @@ This code is made with the assumption that the table you just made was named lin
   	$error = "";
 		$good = true;
 		$sgood = true;
+		$matches = 0;
 
 //Non-existant links
 		if (isset($_GET['exist'])) {
@@ -82,7 +87,7 @@ This code is made with the assumption that the table you just made was named lin
 
 //Functions
 		function sanitize($sql, $formUse = true) {
-			$sql = preg_replace("/(from|script|src|select|insert|delete|where|drop table|show tables|,|'|#|\*|--|\\\\)/i","",$sql);
+			$sql = preg_replace("/(from|script|src|select|insert|delete|where|drop table|show tables|,|'|\*|--|\\\\)/i","",$sql);
 			$sql = trim($sql);
 			$sql = strip_tags($sql);
 			if(!$formUse || !get_magic_quotes_gpc()) {
@@ -91,16 +96,12 @@ This code is made with the assumption that the table you just made was named lin
 			return $sql;
 		}
 		
-		function genshrink($length = 5) {
-			return substr(str_shuffle(str_repeat($char_string, 5)), 0, $length);
-		}
-		
 //Shrink
 		if (isset($_POST['url'])) {
-			$shrink = genshrink();
+			$shrink = substr(str_shuffle(str_repeat($char_string, 10)), 0, $length);
 			
 			if (strlen($shrunk) !== 5) {
-				$shrink = genshrink();
+				$shrink = substr(str_shuffle(str_repeat($char_string, 11)), 0, $length);
 			}
 
 			$url = sanitize($_POST['url']);
@@ -135,7 +136,7 @@ This code is made with the assumption that the table you just made was named lin
 			if ($s_numrows == 1) {
 				while ($value = mysql_fetch_array($s_match_query)) {
 					$good = false;
-					$shrink = genshrink();
+					$shrink = substr(str_shuffle(str_repeat($char_string, 12)), 0, $length);
 					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
 				}
 			}
@@ -234,7 +235,7 @@ For sake of space, I'm not putting the theme css on this readme, just go copy th
 
 >Shrink Comparison - If there's already a shrunken link with the shrink the system just generated, it regenerates the shrink.
 
->URL Variety - ~8 million possible shrunken URLs with the default 5 character shrink code
+>URL Variety - ~60 million possible shrunken URLs with the default 5 character shrink code
 
 >Simple Configuration file - Has simple variables that are easy to understand and edit, it also explains what they are, and saves the default.
 
@@ -253,6 +254,9 @@ For sake of space, I'm not putting the theme css on this readme, just go copy th
 >Non-space consuming - Only requires 4 files
 
 >Tiny - Coded in less than 300 lines of code
+
+##Todo
+>Add self-growing - When you've produced the most unique codes possible with the $char_string and $length, it should add 1 to the lendgth, automatically.
 
 ## License
 Author: Zbee <http://zbee.me> <zbee@zbee.me>
