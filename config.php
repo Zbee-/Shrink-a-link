@@ -14,4 +14,8 @@
     $char_string  =   "abcdefghijklmnopqrstuvwxyz0123456789";
       //The selection of characters that a shrink comes from (note: S-a-L does not currently recognize capitilization)
       //Default: "abcdefghijklmnopqrstuvwxyz0123456789"
+
+    $length = 5;
+      //The length of the generated shrink (5 produces ~60 million codes {36^5 = 36 * 36 * 36 * 36})
+      //Default: "5"
 ?>
