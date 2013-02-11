@@ -8,15 +8,10 @@
 	<body>
 	
 <?php
-    $root_url = "http://**YOUR SITE**.com"; //No trailing slash. Bad: http://example.com/. Good: http://example.com.
-
+    require "config.php";
     $error = "";
         $good = true;
         $sgood = true;
-
-//MySQL connect
-    mysql_connect("localhost", "**DATABASE USERNAME**", "**DATABASE PASSWORD**") or die(mysql_error());
-    mysql_select_db("**DATABASE NAME**");
 
 //Non-existant links
         if (isset($_GET['exist'])) {
@@ -56,7 +51,7 @@
 	}
 	
 	function genshrink($length = 5) {
-		return substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 5)), 0, $length);
+		return substr(str_shuffle(str_repeat($char_string, 5)), 0, $length);
 	}
 
 //Shrink
