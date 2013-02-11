@@ -92,7 +92,7 @@ This code is made with the assumption that the table you just made was named lin
 		}
 		
 		function genshrink($length = 5) {
-			return substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', 5)), 0, $length);
+			return substr(str_shuffle(str_repeat($char_string, 5)), 0, $length);
 		}
 		
 //Shrink
