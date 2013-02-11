@@ -35,6 +35,10 @@ Edit the values in this file to reflect your website's settings.
     $root_url = "http://**YOUR SITE**.com";
       //The root url of your installment of S-a-L (No trailing slash)
       //Default: "http://**YOUR SITE**.com"
+      
+    $char_string  =   "abcdefghijklmnopqrstuvwxyz0123456789";
+      //The selection of characters that a shrink comes from (note: S-a-L does not currently recognize capitilization)
+      //Default: "abcdefghijklmnopqrstuvwxyz0123456789"
 ?>
 ````
 
@@ -231,6 +235,8 @@ For sake of space, I'm not putting the theme css on this readme, just go copy th
 >Shrink Comparison - If there's already a shrunken link with the shrink the system just generated, it regenerates the shrink.
 
 >URL Variety - ~8 million possible shrunken URLs with the default 5 character shrink code
+
+>Simple Configuration file - Has simple variables that are easy to understand and edit, it also explains what they are, and saves the default.
 
 >Simplicity - Takes the user's URL, stores it, generates a code, and returns it as a link; simple as that
 
