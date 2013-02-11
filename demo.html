@@ -9,7 +9,7 @@
 	
 <?php
     require "config.php";
-    $error = "";
+        $error = "";
         $good = true;
         $sgood = true;
 
@@ -49,17 +49,13 @@
 		}
 		return $sql;
 	}
-	
-	function genshrink($length = 5) {
-		return substr(str_shuffle(str_repeat($char_string, 5)), 0, $length);
-	}
 
 //Shrink
         if (isset($_POST['url'])) {
-            $shrink = genshrink();
+            $shrink = substr(str_shuffle(str_repeat($char_string, 10)), 0, $length);
 
             if (strlen($shrunk) !== 5) {
-                $shrink = genshrink();
+                $shrink = substr(str_shuffle(str_repeat($char_string, 11)), 0, $length);
             }
 
             $url = sanitize($_POST['url']);
@@ -94,7 +90,7 @@
             if ($s_numrows == 1) {
                 while ($value = mysql_fetch_array($s_match_query)) {
                     $good = false;
-                    $shrink = genshrink();
+                    $shrink = substr(str_shuffle(str_repeat($char_string, 12)), 0, $length);
                     $error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
                 }
             }
