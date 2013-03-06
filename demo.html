@@ -69,8 +69,26 @@
 		$url = $url;
 	} elseif (strstr($url, "https://") == $url) {
 		$url = $url;
+	} elseif (strstr($url, "//") == $url) {
+		$url = "http:".$url;
+	} elseif (strstr($url, "www.") == $url) {
+		$url = "http://".$url;
+		$www = true;
 	} else {
-		$url = "http://www.".$url."";
+		$url = "http://".$url."";
+	}
+	
+	//Checking if there is anything between the `http://` bit and the `.com` bit
+	$url2 = $url;
+	$url2 = explode("//", $url2);
+	$url2 = $url2[1];
+	$url2 = explode(".", $url2);
+	if ($www = true) { $number = 1; } else { $number = 0; }
+	$url2 = $url2[$number];
+	if ($url2 = "") {
+		$good  = false;
+		$sgood = false;
+		$error .= '<div class="warning">You haven\'t a valid URL.</div><br>';
 	}
 		
 //If given url matches a url already in the table, simply return that url's shrink code
@@ -89,7 +107,6 @@
             $s_numrows = mysql_num_rows($s_match_query);
             if ($s_numrows == 1) {
                 while ($value = mysql_fetch_array($s_match_query)) {
-                    $good = false;
                     $shrink = substr(str_shuffle(str_repeat($char_string, 12)), 0, $length);
                     $error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
                 }
