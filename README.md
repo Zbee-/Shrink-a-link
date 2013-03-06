@@ -115,14 +115,32 @@ This code is made with the assumption that the table you just made was named lin
 				$url = $url;
 			} elseif (strstr($url, "https://") == $url) {
 				$url = $url;
+			} elseif (strstr($url, "//") == $url) {
+				$url = "http:".$url;
+			} elseif (strstr($url, "www.") == $url) {
+				$url = "http://".$url;
+				$www = true;
 			} else {
-				$url = "http://www.".$url."";
+				$url = "http://".$url."";
+			}
+			
+//Checking if there is anything between the `http://` bit and the `.com` bit
+			$url2 = $url;
+			$url2 = explode("//", $url2);
+			$url2 = $url2[1];
+			$url2 = explode(".", $url2);
+			if ($www = true) { $number = 1; } else { $number = 0; }
+			$url2 = $url2[$number];
+			if ($url2 = "") {
+				$good  = false;
+				$sgood = false;
+				$error .= '<div class="warning">You haven\'t a valid URL.</div><br>';
 			}
 		
 //If given url matches a url already in the table, simply return that url's shrink code
 			$match_query = mysql_query("SELECT * FROM links WHERE link='".$_POST['url']."'");
 			$numrows = mysql_num_rows($match_query);
-			if ($numrows == 1) {
+			if ($numrows != 0) {
 				while ($value = mysql_fetch_array($match_query)) {
 					$good = false;
 					$error .= ''.$numrows.'';
@@ -133,9 +151,8 @@ This code is made with the assumption that the table you just made was named lin
 			
 			$s_match_query = mysql_query("SELECT * FROM links WHERE shrink='".$shrink."'");
 			$s_numrows = mysql_num_rows($s_match_query);
-			if ($s_numrows == 1) {
+			if ($s_numrows != 0) {
 				while ($value = mysql_fetch_array($s_match_query)) {
-					$good = false;
 					$shrink = substr(str_shuffle(str_repeat($char_string, 12)), 0, $length);
 					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
 				}
