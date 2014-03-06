@@ -16,6 +16,6 @@
       //Default: "abcdefghijklmnopqrstuvwxyz0123456789"
 
     $length = 5;
-      //The length of the generated shrink (5 produces ~60 million codes {36^5 = 36 * 36 * 36 * 36})
+      //The length of the generated shrink (5 produces ~60 million codes {36^5}), Will expand when you run out of possible shrinks
       //Default: "5"
 ?>

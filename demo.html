@@ -13,7 +13,7 @@ require "config.php";
 //Self-Growing
 $cq   = mysql_query("SELECT * FROM links");
 $cnr  = mysql_num_rows($cq);
-if ($cnr >= strlen($char_string)^$length) { $length += 1; }
+if ($cnr >= (strlen($char_string)^$length)) { $length += 1; }
 
 $error = "";
 $good = true;
