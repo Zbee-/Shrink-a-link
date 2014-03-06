@@ -1,14 +1,19 @@
 #Shrink-a-link
-=============
+
 A Link shrinker made in PHP, it's very light and easy to use.
+Make sure you model your installment of SaL after the included demo file.
+
+If you minify the PHP (http://s.zbee.me/ov2) and the CSS (http://s.zbee.me/7gf), it'll be even faster and lighter! :D
 
 ##Setup
 
 Use this SQL code to create a table to house all the links.
 ``` bash
 CREATE TABLE `links` (
-  `link` VARCHAR(512) NULL,
-	`shrink` VARCHAR(255) NULL
+	`ID` int(10) NOT NULL AUTO_INCREMENT,
+	`link` VARCHAR(512) NULL,
+	`shrink` VARCHAR(255) NULL,
+	PRIMARY KEY (ID)
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=MyISAM;
@@ -58,7 +63,7 @@ require "config.php";
 //Self-Growing
 $cq   = mysql_query("SELECT * FROM links");
 $cnr  = mysql_num_rows($cq);
-if ($cnr >= (strlen($char_string)^$length)) { $length += 1; }
+if ($cnr >= (pow(strlen($char_string),$length))) { $length += 1; }
 
 $error = "";
 $good = true;

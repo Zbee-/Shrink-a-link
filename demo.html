@@ -13,7 +13,7 @@ require "config.php";
 //Self-Growing
 $cq   = mysql_query("SELECT * FROM links");
 $cnr  = mysql_num_rows($cq);
-if ($cnr >= (strlen($char_string)^$length)) { $length += 1; }
+if ($cnr >= (pow(strlen($char_string),$length))) { $length += 1; }
 
 $error = "";
 $good = true;
@@ -134,7 +134,7 @@ if (isset($_POST['url'])) {
 				<?php echo $error; ?>
 		</div>
 
-		<form action="index.php" method="post" id="main">
+		<form action="#" method="post" id="main">
 				<em>Insert a link to have it shrunk</em><br>
 				<input type="text" name="url">
 				<br>
