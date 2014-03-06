@@ -53,125 +53,128 @@ This code is made with the assumption that the table you just made was named lin
 
 ``` bash
 <?php
-   	require "config.php";
-  	$error = "";
-		$good = true;
-		$sgood = true;
-		$matches = 0;
+require "config.php";
+
+//Self-Growing
+$cq   = mysql_query("SELECT * FROM links");
+$cnr  = mysql_num_rows($cq);
+if ($cnr >= strlen($char_string)^$length) { $length += 1; }
+
+$error = "";
+$good = true;
+$sgood = true;
 
 //Non-existant links
-		if (isset($_GET['exist'])) {
-			$exist = $_GET['exist'];
-		} else {
-			$exist = "yes";
-		}
+if (isset($_GET['exist'])) {
+	$exist = $_GET['exist'];
+} else {
+	$exist = "yes";
+}
 
-		if (isset($_GET['attempt'])) {
-			$attempt = $_GET['attempt'];
-		} else {
-			$attempt = "";
-		}
+if (isset($_GET['attempt'])) {
+	$attempt = $_GET['attempt'];
+} else {
+	$attempt = "";
+}
 
-		if ($exist == "no" && $attempt != "") {
-			$deleted = yes;
-			$error .= '<div class="ribbon">Sorry, '.$root_url.'/'.$attempt.' does not exist.</div><br>';
-		}
+if ($exist == "no" && $attempt != "") {
+	$deleted = yes;
+	$error .= '<div class="ribbon">Sorry, '.$root_url.'/'.$attempt.' does not exist.</div><br>';
+}
 
-		if ($exist == "no" && $deleted != yes) {
-			$error .= '<div class="ribbon">Sorry, the shrunken url you tried to visit does not exist.</div><br>';
-		}
+if ($exist == "no" && $deleted != yes) {
+	$error .= '<div class="ribbon">Sorry, the shrunken url you tried to visit does not exist.</div><br>';
+}
 
-		if ($exist = "no") {
-			mysql_query("DELETE FROM links WHERE shrink='".$attempt."' LIMIT 1");
-		}
+if ($exist = "no") {
+	mysql_query("DELETE FROM links WHERE shrink='".$attempt."' LIMIT 1");
+}
 
 //Functions
-		function sanitize($sql, $formUse = true) {
-			$sql = preg_replace("/(from|script|src|select|insert|delete|where|drop table|show tables|,|'|\*|--|\\\\)/i","",$sql);
-			$sql = trim($sql);
-			$sql = strip_tags($sql);
-			if(!$formUse || !get_magic_quotes_gpc()) {
-				$sql = addslashes($sql);
-			}
-			return $sql;
-		}
-		
-//Shrink
-		if (isset($_POST['url'])) {
-			$shrink = substr(str_shuffle(str_repeat($char_string, 10)), 0, $length);
-			
-			if (strlen($shrunk) !== 5) {
-				$shrink = substr(str_shuffle(str_repeat($char_string, 11)), 0, $length);
-			}
+function sanitize($sql, $formUse = true) {
+	$sql = preg_replace("/(from|script|src|select|insert|delete|where|drop table|show tables|,|'|\*|--|\\\\)/i","",$sql);
+	$sql = trim($sql);
+	$sql = strip_tags($sql);
+	if(!$formUse || !get_magic_quotes_gpc()) {
+		$sql = addslashes($sql);
+	}
+	return $sql;
+}
 
-			$url = sanitize($_POST['url']);
-			if (empty($url)) {
-				$error .= '<div class="ribbon">You have nothing in the url box.</div><br/>';
-				$good = false;
-			}
+//Shrink
+if (isset($_POST['url'])) {
+	$shrink = substr(str_shuffle(str_repeat($char_string, 10)), 0, $length);
+
+	if (strlen($shrunk) !== 5) {
+		$shrink = substr(str_shuffle(str_repeat($char_string, 11)), 0, $length);
+	}
+
+	$url = sanitize($_POST['url']);
+	if (empty($url)) {
+		$error .= '<div class="ribbon">You have nothing in the url box.</div><br/>';
+		$good = false;
+	}
 
 //Real URL checking
-			if (strstr($url, "http://") == $url) {
-				$url = $url;
-			} elseif (strstr($url, "https://") == $url) {
-				$url = $url;
-			} elseif (strstr($url, "//") == $url) {
-				$url = "http:".$url;
-			} elseif (strstr($url, "www.") == $url) {
-				$url = "http://".$url;
-				$www = true;
-			} else {
-				$url = "http://".$url."";
-			}
-			
-//Checking if there is anything between the `http://` bit and the `.com` bit
-			$url2 = $url;
-			$url2 = explode("//", $url2);
-			$url2 = $url2[1];
-			$url2 = explode(".", $url2);
-			if ($www = true) { $number = 1; } else { $number = 0; }
-			$url2 = $url2[$number];
-			if ($url2 = "") {
-				$good  = false;
-				$sgood = false;
-				$error .= '<div class="warning">You haven\'t a valid URL.</div><br>';
-			}
-		
-//If given url matches a url already in the table, simply return that url's shrink code
-			$match_query = mysql_query("SELECT * FROM links WHERE link='".$_POST['url']."'");
-			$numrows = mysql_num_rows($match_query);
-			if ($numrows != 0) {
-				while ($value = mysql_fetch_array($match_query)) {
-					$good = false;
-					$error .= ''.$numrows.'';
-					$shrink = $value['shrink'];
-					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
-				}
-			}
-			
-			$s_match_query = mysql_query("SELECT * FROM links WHERE shrink='".$shrink."'");
-			$s_numrows = mysql_num_rows($s_match_query);
-			if ($s_numrows != 0) {
-				while ($value = mysql_fetch_array($s_match_query)) {
-					$shrink = substr(str_shuffle(str_repeat($char_string, 12)), 0, $length);
-					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.''.$value['shrink'].'</a></div><br>';
-				}
-			}
+	if (strstr($url, "http://") == $url) {
+		$url = $url;
+	} elseif (strstr($url, "https://") == $url) {
+		$url = $url;
+	} elseif (strstr($url, "//") == $url) {
+		$url = "http:".$url;
+	} elseif (strstr($url, "www.") == $url) {
+		$url = "http://".$url;
+		$www = true;
+	} else {
+		$url = "http://".$url."";
+	}
 
-			if ($good == true) {
-				$query = mysql_query("INSERT INTO links (link, shrink) VALUES ('$url','$shrink')");
-				if (!$query) {
-					$error .= '<div class="ribbon">MySQL Error: ' . mysql_error() . '</div><br>';
-				} else {
-					$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$shrink.'">'.$root_url.''.$shrink.'</a></div><br>';
-				}
-			}
+//Checking if there is anything between the `http://` bit and the `.com` bit
+	$url2 = $url;
+	$url2 = explode("//", $url2);
+	$url2 = $url2[1];
+	$url2 = explode(".", $url2);
+	if ($www = true) { $number = 1; } else { $number = 0; }
+	$url2 = $url2[$number];
+	if ($url2 = "") {
+		$good  = false;
+		$sgood = false;
+		$error .= '<div class="warning">You haven\'t a valid URL.</div><br>';
+	}
+	
+//If given url matches a url already in the table, simply return that url's shrink code
+	$match_query = mysql_query("SELECT * FROM links WHERE link='".$_POST['url']."'");
+	$numrows = mysql_num_rows($match_query);
+	if ($numrows != 0) {
+		while ($value = mysql_fetch_array($match_query)) {
+			$good = false;
+			$shrink = $value['shrink'];
+			$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$value['shrink'].'">'.$root_url.'/'.$value['shrink'].'</a></div><br>';
 		}
+	}
+
+	$s_match_query = mysql_query("SELECT * FROM links WHERE shrink='".$shrink."'");
+	$s_numrows = mysql_num_rows($s_match_query);
+	if ($s_numrows != 0) {
+		while ($value = mysql_fetch_array($s_match_query)) {
+			$shrink = substr(str_shuffle(str_repeat($char_string, 12)), 0, $length);
+		}
+	}
+
+	if ($good == true) {
+		$query = mysql_query("INSERT INTO links (link, shrink) VALUES ('$url','$shrink')");
+		if (!$query) {
+			$error .= '<div class="ribbon">MySQL Error: ' . mysql_error() . '</div><br>';
+		} else {
+			$error .= '<div class="ribbon">Link shrunk successfully! <a href="'.$root_url.'/'.$shrink.'">'.$root_url.'/'.$shrink.'</a></div><br>';
+		}
+	}
+}
 ?>
 ````
 
 ###.htaccess file
-Since you're not actually going to generate a page that simple redirects example.com/oupn to example.com/reallylongurlyou/dontwant?to=type&your=self, the .htacces file
+Since you're not actually going to generate a page that simply redirects example.com/oupn to example.com/reallylongurlyou/dontwant?to=type&your=self, the .htacces file
 (which should actually be called '.htaccess' when you're making the file) will redirect errors (shrunk URLs) to error.php, which will see if the
 url you just tried to visit has a link attached to it; if it doesn't it makes sure to delete it.
 
@@ -248,6 +251,8 @@ if ($num_rows == 1) {
 For sake of space, I'm not putting the theme css on this readme, just go copy the style.css file.
 
 ##Features
+>Self-Growing - When the maximum amount of URLs have been generated with the configured length, it will generate a shrunken URL that is 1 character longer.
+
 >URL Comparison - If there's already a shrunken link with the URL the user just inputed, it simply returns the shrunken URL.
 
 >Shrink Comparison - If there's already a shrunken link with the shrink the system just generated, it regenerates the shrink.
@@ -273,9 +278,7 @@ For sake of space, I'm not putting the theme css on this readme, just go copy th
 >Tiny - Coded in less than 300 lines of code
 
 ##Todo
->Add self-growing - When you've produced the most unique codes possible with the $char_string and $length, it should add 1 to the lendgth, automatically.
+
 
 ## License
 Author: Zbee <http://zbee.me> <zbee@zbee.me>
-
-Licensed under AOL <http://zbee.me/aol>

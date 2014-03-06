@@ -70,9 +70,10 @@ a.ribbon:focus, a .ribbon:focus .ribbon a:focus {
 	border: 1px solid rgba(0,0,0,0.25) ;
 	margin: 1px;
 	padding: 40px;
+	padding-bottom:30px;
 	background: rgba(0,0,0,0.25);
 	-webkit-box-shadow: inset 0px 0px 10px 1px rgba(0,0,0,0.75);
-  box-shadow: inset 0px 0px 10px 1px rgba(0,0,0,0.75);
+	box-shadow: inset 0px 0px 10px 1px rgba(0,0,0,0.75);
 	font-size: 14px !important; color: #fff !important; font-family: Arial !important; font-weight: bold !important;
 }
 
@@ -150,11 +151,6 @@ input {
     box-shadow: inset 0px 0px 10px 1px rgba(0,0,0,0.75);
 	text-align: center;
 	width: 85%;
-}
-
-input.fail {
-	outline: none;
-	background: rgba(125,0,0,0.25);
 }
 
 input:focus {

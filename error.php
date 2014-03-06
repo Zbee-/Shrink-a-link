@@ -5,8 +5,8 @@
     </head>
     <body>
 
-    <?php
-    require "config.php";
+<?php
+require "config.php";
 
 function endsWith($haystack, $needle) {
     $length = strlen($needle);
@@ -29,10 +29,10 @@ if ($page == "" || empty($page)) {
     </script>';
 }
 
-$query = mysql_query("SELECT original FROM links WHERE shrink='".$page."'");
+$query = mysql_query("SELECT * FROM links WHERE shrink='".$page."'");
 $num_rows = mysql_num_rows($query);
 
-if ($num_rows == 1) {
+if ($num_rows === 1) {
     while ($value = mysql_fetch_array($query)) {
         echo '<script type="text/javascript">
         <!--
