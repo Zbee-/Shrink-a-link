@@ -11,7 +11,7 @@
       //Database Name Preface (if it's set to "sal_" the database made and used will be "sal_links")
       //Default: "sal_"
 
-    $root_url = "http://beta.zbee.me/sal";
+    $root_url = "http://**YOUR SITE**.com";
       //The root url of your installment of S-a-L (No trailing slash)
       //Default: "http://**YOUR SITE**.com"
       
