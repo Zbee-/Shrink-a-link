@@ -1,4 +1,4 @@
-#Shrink-a-link
+#linkShrinker.PHP (Shrink-a-link)
 A Link shrinker made in PHP, which is very light and easy to use.
 Make sure you model your instalment of SaL after the included demo file.
 
